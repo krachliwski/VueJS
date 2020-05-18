@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Propriedades computadas</title>
+</head>
+<body>
+    <div id="app">
+
+        <ul>
+            <li v-for="registro in registros">
+                {{ registro.carro}} - {{ registro.valor | TrataValor }}
+            </li>
+        </ul>
+        <p> Total:  {{ valorTotal }} </p>
+        
+    </div>
+    
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>    
+    <script>
+        new Vue({
+        el: '#app',
+            data: {
+                registros: [
+                    {carro: 'Uno', valor:15},
+                    {carro: 'Civic', valor:25},
+                    {carro: 'Fusion', valor:40}
+                ]
+        },
+        filters:{
+            TrataValor: function(valor){
+                return ('R$'+(valor).toFixed(2)).replace('.',',');
+            }
+        },
+        computed: {
+            valorTotal: function() {
+                var total = 0;
+                for(item of this.registros) {
+                    total += item.valor;
+                }
+                return total;
+            }
+        }
+    })
+</script>
+</body>
+</html>
